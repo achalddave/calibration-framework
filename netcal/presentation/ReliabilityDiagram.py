@@ -322,8 +322,9 @@ class ReliabilityDiagram(object):
 
             # first dimension is confidence dimension - use the binning in this dimension to
             # determine median as fill values for empty bins
-            batch_acc[nan_indices] = median_confidence[nan_indices]
-            batch_conf[nan_indices] = median_confidence[nan_indices]
+            # Set accuracy and confidence to 0 if there are no predictions.
+            batch_acc[nan_indices] = 0  # median_confidence[nan_indices]
+            batch_conf[nan_indices] = 0  # median_confidence[nan_indices]
 
             # convert to relative amount of samples
             batch_num_samples = batch_num_samples / np.sum(batch_num_samples)
