@@ -246,7 +246,7 @@ class BBQ(AbstractCalibration):
 
         # iterate over all different binnings and fit Histogram Binning methods
         model_list = []
-        for bins in tqdm(itertools.product(*all_ranges), total=np.power(len(bin_range), num_features)):
+        for bins in tqdm(itertools.product(*all_ranges), total=np.power(len(bin_range), num_features), disable=True):
 
             bins = bins[0] if not self.detection else bins
             histogram = HistogramBinning(bins=bins, detection=self.detection)
