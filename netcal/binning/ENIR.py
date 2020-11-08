@@ -241,11 +241,17 @@ class ENIR(AbstractCalibration):
         # binary classification problem but got two entries? (probability for 0 and 1 separately)?
         # we only need probability p for Y=1 (probability for 0 is (1-p) )
         if len(X.shape) == 2:
-            X = np.array(X[:, 1])
+            if self.detection:
+                X = np.array(X[:, 0])
+            else:
+                X = np.array(X[:, 1])
         else:
             X = np.array(X)
 
         X, y = self._sort_arrays(X, y)
+
+        if y.dtype == 'bool':
+            y = y.astype(int)
 
         # log action
         self.logger.info("Get path of all Near Isotonic Regression models with mPAVA ...")

@@ -112,7 +112,11 @@ class IsotonicRegression(AbstractCalibration):
             return self
 
         # important: sort arrays by confidence
-        X, y = self._sort_arrays(X, y)
+        if len(X.shape) == 2:
+            assert X.shape[1] == 1
+            X, y = self._sort_arrays(X[:, 0], y)
+        else:
+            X, y = self._sort_arrays(X, y)
 
         # due to some reasons, this is necessary for IsotonicRegression function by sklearn
         X = X.astype(np.float)
